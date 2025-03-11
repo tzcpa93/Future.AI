@@ -8,7 +8,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Keep all your existing animations & custom styles */
+    /* Keep your existing animations & custom styles here */
 
     /* For the fade-out effect on the top section */
     #top-section {
@@ -18,12 +18,12 @@
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
 
-  <!-- Gradient Header -->
+  <!-- Nav/Header -->
   <div class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
     <h1 class="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
   </div>
 
-  <!-- Top Section (Intro Text) -->
+  <!-- This is the portion you want to fade out -->
   <div id="top-section" class="p-8">
     <div class="w-full max-w-2xl mx-auto text-center mb-16">
       <h2 class="text-5xl font-bold mb-6">
@@ -37,41 +37,56 @@
     </div>
   </div>
 
-  <!-- Main Widget Area -->
+  <!-- Main Widget Area (the form, animations, results, etc.) -->
   <div class="flex-grow p-8 flex flex-col items-center justify-center">
     <div class="w-full max-w-2xl mx-auto">
       <div class="min-h-64 relative rounded-xl overflow-hidden">
-        
-        <!-- All your stages (form-stage, folding-stage, thinking-stage, etc.) go here -->
-        <!--
-          Make sure you remove any extra bg-gray-900 classes 
-          or repeated backgrounds from inside these stages, 
-          so it all sits on the body’s bg-gray-900.
-        -->
-
+        <!-- Form Stage (now OUTSIDE #top-section) -->
         <div id="form-stage" class="transition-all duration-500 z-10">
-          <!-- ... form contents ... -->
+          <!-- Your inputs here -->
+          <div class="space-y-8">
+            <div>
+              <label class="block text-xl text-gray-300 mb-3">Company Website</label>
+              <input
+                type="url"
+                id="companyWebsite"
+                placeholder="https://www.yourcompany.com"
+                class="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                required
+              />
+            </div>
+            <div>
+              <label class="block text-xl text-gray-300 mb-3">Your Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                class="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                required
+              />
+            </div>
+            <div class="pt-6 flex justify-center">
+              <button
+                id="predict-btn"
+                class="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative"
+              >
+                Make me a prediction right now
+                <span class="absolute -bottom-2 -right-2 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center pointer-events-none">
+                  <span class="transform translate-y-px">👆</span>
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
 
+        <!-- Other stages: folding-stage, thinking-stage, etc. -->
         <div id="folding-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-          <!-- ... folding animation ... -->
+          <!-- folding animation -->
         </div>
-
         <div id="thinking-stage" class="space-y-6 transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-          <!-- ... thinking animation ... -->
+          <!-- thinking animation -->
         </div>
-
-        <div id="quantum-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-          <!-- ... quantum animation ... -->
-        </div>
-
-        <div id="blackhole-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-          <!-- ... blackhole animation ... -->
-        </div>
-
-        <div id="result-stage" class="space-y-6 transition-opacity duration-500 absolute inset-0 -z-10 opacity-0">
-          <!-- ... result stage ... -->
-        </div>
+        <!-- ... and so on for quantum-stage, blackhole-stage, result-stage ... -->
       </div>
     </div>
   </div>
@@ -82,32 +97,18 @@
     <a href="#" class="text-cyan-300 hover:underline mt-1 inline-block">Media Inquiries</a>
   </div>
 
-  <!-- Your scripts -->
   <script>
-    // Keep your existing JS logic, just ensure 
-    // you don't re-apply any separate background to #top-section
-    // or the widget container.
-
+    // Example logic to fade out top-section and show the next stage
     const topSection = document.getElementById('top-section');
     const predictBtn = document.getElementById('predict-btn');
-    const resetBtn = document.getElementById('reset-btn');
-
+    
+    // Just an example to show the fade-out
     predictBtn.addEventListener('click', () => {
-      // Fade out top section
       topSection.classList.add('opacity-0');
       setTimeout(() => {
         topSection.style.display = 'none';
-        // Proceed with showing folding stage, etc.
+        // Then do your stage transitions here (folding, thinking, etc.)
       }, 500);
-    });
-
-    resetBtn.addEventListener('click', () => {
-      // Show top section again
-      topSection.style.display = 'block';
-      setTimeout(() => {
-        topSection.classList.remove('opacity-0');
-      }, 50);
-      // Also switch stages back to form
     });
   </script>
 </body>
