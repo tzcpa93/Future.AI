@@ -77,28 +77,41 @@
     @keyframes star-drift2 { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, -20px); } }
     
     .hidden { display: none; }
+
+    /* New style for the top section fade-out */
+    #top-section {
+      transition: opacity 0.5s ease-in-out;
+    }
   </style>
 </head>
 <body class="w-full min-h-screen flex flex-col">
-  <!-- Header -->
-  <div class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
-    <h1 class="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
+  <!-- Top Section (Header + Intro Text) -->
+  <div id="top-section">
+    <!-- Header -->
+    <div class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
+      <h1 class="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
+    </div>
+
+    <!-- Intro Text -->
+    <div class="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+      <div class="w-full max-w-2xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-5xl font-bold mb-6">
+            Generate future <span class="text-cyan-300">predictions</span> for <span class="text-cyan-300">free.</span>
+          </h2>
+          <p class="text-xl text-gray-300 mb-2">Did you take one psychology class in college?</p>
+          <p class="text-xl text-gray-300 mb-8">Have you used ChatGPT a few times?</p>
+          <p class="text-2xl mb-12">
+            <span class="font-bold">Guess what?</span> You're ready to predict a <span class="text-cyan-300">$20B</span> future.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- Widget Area (Animation & Form) -->
   <div class="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
     <div class="w-full max-w-2xl mx-auto">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-bold mb-6">
-          Generate future <span class="text-cyan-300">predictions</span> for <span class="text-cyan-300">free.</span>
-        </h2>
-        <p class="text-xl text-gray-300 mb-2">Did you take one psychology class in college?</p>
-        <p class="text-xl text-gray-300 mb-8">Have you used ChatGPT a few times?</p>
-        <p class="text-2xl mb-12">
-          <span class="font-bold">Guess what?</span> You're ready to predict a <span class="text-cyan-300">$20B</span> future.
-        </p>
-      </div>
-
       <!-- Widget Area -->
       <div class="min-h-64 relative rounded-xl overflow-hidden">
         <!-- Form Stage -->
@@ -319,17 +332,30 @@
     }
 
     predictBtn.addEventListener('click', () => {
-      showStage(stages.folding);
+      // Fade out the top section before starting the animation sequence
+      const topSection = document.getElementById('top-section');
+      topSection.classList.add('opacity-0');
       setTimeout(() => {
-        showStage(stages.thinking);
-        startThinkingSequence();
-      }, 2000);
+        topSection.style.display = 'none';
+        showStage(stages.folding);
+        setTimeout(() => {
+          showStage(stages.thinking);
+          startThinkingSequence();
+        }, 2000);
+      }, 500); // Wait for the fade-out transition (500ms)
     });
 
     resetBtn.addEventListener('click', () => {
       showStage(stages.form);
       document.getElementById('companyWebsite').value = '';
       document.getElementById('email').value = '';
+      // Also restore the top section so the header and intro text reappear
+      const topSection = document.getElementById('top-section');
+      topSection.style.display = 'block';
+      // Reset opacity for future interactions
+      setTimeout(() => {
+        topSection.classList.remove('opacity-0');
+      }, 50);
     });
   </script>
 </body>
