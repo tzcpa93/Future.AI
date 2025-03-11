@@ -1,301 +1,576 @@
-import React, { useState } from 'react';
-import { ThumbsUp, Brain, BarChart3, Sun } from 'lucide-react';
-
-const FutureMe = () => {
-  const [formState, setFormState] = useState({
-    companyWebsite: '',
-    email: ''
-  });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future.Me - AI Prediction</title>
   
-  const [currentStage, setCurrentStage] = useState('form');
-  const [thoughts, setThoughts] = useState([]);
-  const [dataPoints, setDataPoints] = useState(0);
+  <!-- Load React -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   
-  // No timeZones needed since we removed the timezone selector
+  <!-- Load Babel for JSX -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
-  };
+  <!-- Load Lucide icons -->
+  <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
   
-  const handlePredictClick = () => {
-    setCurrentStage('folding');
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+    // Get icons from Lucide
+    const { ThumbsUp, Brain, BarChart3, Sun, Clock } = LucideReact;
     
-    setTimeout(() => {
-      setCurrentStage('thinking');
-      startThinkingSequence();
-    }, 2000);
-  };
-  
-  const startThinkingSequence = () => {
-    const thinkingPhrases = [
-      "Analyzing temporal anomalies...",
-      "Consulting with future experts...",
-      "Calculating probability matrices...",
-      "Scanning multiverse timelines...",
-      "Cross-referencing quantum variables..."
-    ];
-    
-    let thoughtIndex = 0;
-    const addThought = () => {
-      if (thoughtIndex < 5) {
-        const phrase = thinkingPhrases[thoughtIndex];
-        setThoughts(prev => [...prev, phrase]);
-        setDataPoints(prev => prev + Math.floor(Math.random() * 15000000) + 5000000);
-        thoughtIndex++;
-        setTimeout(addThought, 800);
-      } else {
-        setTimeout(() => {
-          setCurrentStage('blackhole');
-          
-          setTimeout(() => {
-            setCurrentStage('result');
-          }, 2000);
-        }, 1000);
-      }
-    };
-    
-    addThought();
-  };
-  
-  const getTomorrowDate = () => {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    
-    return tomorrow.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      month: 'long', 
-      day: 'numeric',
-      year: 'numeric'
-    });
-  };
-  
-  const resetWidget = () => {
-    setCurrentStage('form');
-    setThoughts([]);
-    setDataPoints(0);
-  };
-  
-  return (
-    <div className="w-full min-h-screen flex flex-col">
-      {/* Gradient header */}
-      <div className="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
-        <h1 className="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
-      </div>
+    const FutureMe = () => {
+      const [formState, setFormState] = React.useState({
+        companyWebsite: '',
+        email: ''
+      });
       
-      {/* Main content */}
-      <div className="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
-        <div className="w-full max-w-2xl mx-auto">
-          {/* Title section */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-6">
-              Generate future <span className="text-cyan-300">predictions</span> for <span className="text-cyan-300">free.</span>
-            </h2>
-            
-            <p className="text-xl text-gray-300 mb-2">Did you take one psychology class in college?</p>
-            <p className="text-xl text-gray-300 mb-8">Have you used ChatGPT a few times?</p>
-            
-            <p className="text-2xl mb-12">
-              <span className="font-bold">Guess what?</span> You're ready to predict a <span className="text-cyan-300">$20B</span> future.
-            </p>
+      const [currentStage, setCurrentStage] = React.useState('form'); // 'form', 'folding', 'thinking', 'quantum', 'blackhole', 'result'
+      const [thoughts, setThoughts] = React.useState([]);
+      const [dataPoints, setDataPoints] = React.useState(0);
+      
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormState(prev => ({ ...prev, [name]: value }));
+      };
+      
+      const handlePredictClick = () => {
+        setCurrentStage('folding');
+        
+        setTimeout(() => {
+          setCurrentStage('thinking');
+          startThinkingSequence();
+        }, 2000);
+      };
+      
+      const startThinkingSequence = () => {
+        const thinkingPhrases = [
+          "Analyzing temporal anomalies...",
+          "Consulting with future experts...",
+          "Calculating probability matrices...",
+          "Scanning multiverse timelines...",
+          "Cross-referencing quantum variables..."
+        ];
+        
+        let thoughtIndex = 0;
+        const addThought = () => {
+          if (thoughtIndex < 5) {
+            const phrase = thinkingPhrases[thoughtIndex];
+            setThoughts(prev => [...prev, phrase]);
+            setDataPoints(prev => prev + Math.floor(Math.random() * 15000000) + 5000000);
+            thoughtIndex++;
+            setTimeout(addThought, 800);
+          } else {
+            // Add a longer pause before the quantum animation for dramatic effect
+            setTimeout(() => {
+              setCurrentStage('quantum');
+              
+              // Show blackhole after quantum animation
+              setTimeout(() => {
+                setCurrentStage('blackhole');
+                
+                // Show final result after blackhole
+                setTimeout(() => {
+                  setCurrentStage('result');
+                }, 3000);
+              }, 4000);
+            }, 1500);
+          }
+        };
+        
+        addThought();
+      };
+      
+      const getTomorrowDate = () => {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        
+        return tomorrow.toLocaleDateString('en-US', { 
+          weekday: 'long', 
+          month: 'long', 
+          day: 'numeric',
+          year: 'numeric'
+        });
+      };
+      
+      const resetWidget = () => {
+        setCurrentStage('form');
+        setThoughts([]);
+        setDataPoints(0);
+      };
+      
+      return (
+        <div className="w-full min-h-screen flex flex-col">
+          {/* Gradient header */}
+          <div className="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
+            <h1 className="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
           </div>
           
-          {/* Main widget area with fixed height to prevent layout shifts */}
-          <div className="min-h-64 relative rounded-xl overflow-hidden">
-            
-            {/* Form Stage */}
-            <div className={`transition-all duration-500 ${currentStage !== 'form' ? 'opacity-0 absolute inset-0 -z-10' : 'opacity-100 z-10'}`}>
-              <div className="space-y-8">
-                <div>
-                  <label className="block text-xl text-gray-300 mb-3">Company Website</label>
-                  <input
-                    type="url"
-                    name="companyWebsite"
-                    value={formState.companyWebsite || ''}
-                    onChange={handleInputChange}
-                    placeholder="https://www.yourcompany.com"
-                    className="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
-                    required
-                  />
-                </div>
+          {/* Main content */}
+          <div className="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+            <div className="w-full max-w-2xl mx-auto">
+              {/* Title section */}
+              <div className="text-center mb-16">
+                <h2 className="text-5xl font-bold mb-6">
+                  Generate future <span className="text-cyan-300">predictions</span> for <span className="text-cyan-300">free.</span>
+                </h2>
                 
-                <div>
-                  <label className="block text-xl text-gray-300 mb-3">Your Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formState.email || ''}
-                    onChange={handleInputChange}
-                    placeholder="you@example.com"
-                    className="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
-                    required
-                  />
-                </div>
+                <p className="text-xl text-gray-300 mb-2">Did you take one psychology class in college?</p>
+                <p className="text-xl text-gray-300 mb-8">Have you used ChatGPT a few times?</p>
                 
-                <div className="pt-6 flex justify-center">
-                  <button
-                    type="button"
-                    onClick={handlePredictClick}
-                    className="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative"
-                  >
-                    Make me a prediction right now
-                    <span className="absolute -bottom-2 -right-2 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center pointer-events-none">
-                      <span className="transform translate-y-px">👆</span>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            {/* Folding Animation */}
-            <div className={`h-64 flex items-center justify-center transition-opacity duration-300 ${currentStage === 'folding' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
-              <div className="relative">
-                <div className="w-32 h-32 bg-cyan-300 rounded-md origami-fold"></div>
-              </div>
-            </div>
-            
-            {/* Thinking Animation */}
-            <div className={`space-y-6 transition-opacity duration-300 ${currentStage === 'thinking' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
-              <div className="flex items-center justify-center mb-4">
-                <div className="brain-pulse">
-                  <Brain className="h-16 w-16 text-cyan-300" />
-                </div>
-              </div>
-              
-              <div className="space-y-3">
-                {thoughts.map((thought, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-gray-800 p-4 rounded-lg thought-appear"
-                    style={{ '--delay': `${index * 0.2}s` }}
-                  >
-                    <p className="text-gray-300">{thought}</p>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-6 text-center">
-                <p className="text-lg text-gray-300">
-                  <span className="font-medium text-cyan-300">{dataPoints.toLocaleString()}</span> data points processed
+                <p className="text-2xl mb-12">
+                  <span className="font-bold">Guess what?</span> You're ready to predict a <span className="text-cyan-300">$20B</span> future.
                 </p>
-                <div className="w-full bg-gray-800 rounded-full h-3 mt-3">
-                  <div 
-                    className="bg-cyan-300 h-3 rounded-full"
-                    style={{ width: `${Math.min((thoughts.length / 5) * 100, 100)}%`, transition: 'width 0.8s ease-in-out' }}
-                  ></div>
-                </div>
               </div>
-            </div>
-            
-            {/* Blackhole Animation */}
-            <div className={`h-64 flex items-center justify-center transition-opacity duration-300 ${currentStage === 'blackhole' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
-              <div className="blackhole"></div>
-            </div>
-            
-            {/* Result */}
-            <div className={`space-y-6 transition-opacity duration-500 ${currentStage === 'result' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
-              <div className="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
-                <h3 className="text-2xl font-bold mb-3">Future Prediction</h3>
-                <div className="text-3xl font-bold mb-6">
-                  Tomorrow will be {getTomorrowDate()}
+              
+              {/* Main widget area with fixed height to prevent layout shifts */}
+              <div className="min-h-64 relative rounded-xl overflow-hidden">
+                
+                {/* Form Stage */}
+                <div className={`transition-all duration-500 ${currentStage !== 'form' ? 'opacity-0 absolute inset-0 -z-10' : 'opacity-100 z-10'}`}>
+                  <div className="space-y-8">
+                    <div>
+                      <label className="block text-xl text-gray-300 mb-3">Company Website</label>
+                      <input
+                        type="url"
+                        name="companyWebsite"
+                        value={formState.companyWebsite || ''}
+                        onChange={handleInputChange}
+                        placeholder="https://www.yourcompany.com"
+                        className="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xl text-gray-300 mb-3">Your Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formState.email || ''}
+                        onChange={handleInputChange}
+                        placeholder="you@example.com"
+                        className="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="pt-6 flex justify-center">
+                      <button
+                        type="button"
+                        onClick={handlePredictClick}
+                        className="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative"
+                      >
+                        Make me a prediction right now
+                        <span className="absolute -bottom-2 -right-2 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center pointer-events-none">
+                          <span className="transform translate-y-px">👆</span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="flex items-center justify-center space-x-3 mt-4">
-                  <ThumbsUp className="h-6 w-6" />
-                  <span className="font-bold text-xl">100% Accuracy</span>
-                </div>
-              </div>
-              
-              <div className="bg-gray-800 p-5 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <BarChart3 className="h-6 w-6 text-gray-400 mr-2" />
-                    <span className="text-lg text-gray-300">
-                      {(dataPoints + 42000000).toLocaleString()} data points considered
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <Sun className="h-6 w-6 text-yellow-300 mr-2" />
-                    <span className="text-lg text-gray-300">Confidence: 100%</span>
+                {/* Folding Animation */}
+                <div className={`h-64 flex items-center justify-center transition-opacity duration-300 ${currentStage === 'folding' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+                  <div className="relative">
+                    <div className="w-32 h-32 bg-cyan-300 rounded-md origami-fold"></div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="flex justify-center pt-4">
-                <button
-                  onClick={resetWidget}
-                  className="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white text-lg font-medium rounded-md shadow-md transition duration-200"
-                >
-                  Try Another Prediction
-                </button>
+                
+                {/* Thinking Animation */}
+                <div className={`space-y-6 transition-opacity duration-300 ${currentStage === 'thinking' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="brain-pulse">
+                      <Brain className="h-16 w-16 text-cyan-300" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {thoughts.map((thought, index) => (
+                      <div 
+                        key={index} 
+                        className="bg-gray-800 p-4 rounded-lg thought-appear"
+                        style={{ '--delay': `${index * 0.2}s` }}
+                      >
+                        <p className="text-gray-300">{thought}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-6 text-center">
+                    <p className="text-lg text-gray-300">
+                      <span className="font-medium text-cyan-300">{dataPoints.toLocaleString()}</span> data points processed
+                    </p>
+                    <div className="w-full bg-gray-800 rounded-full h-3 mt-3">
+                      <div 
+                        className="bg-cyan-300 h-3 rounded-full"
+                        style={{ width: `${Math.min((thoughts.length / 5) * 100, 100)}%`, transition: 'width 0.8s ease-in-out' }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Quantum Animation */}
+                <div className={`h-64 flex items-center justify-center transition-opacity duration-300 ${currentStage === 'quantum' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+                  <div className="quantum-container">
+                    <div className="quantum-ring ring-1"></div>
+                    <div className="quantum-ring ring-2"></div>
+                    <div className="quantum-ring ring-3"></div>
+                    <div className="quantum-particles"></div>
+                    <div className="quantum-core"></div>
+                  </div>
+                </div>
+                
+                {/* Blackhole Animation */}
+                <div className={`h-64 flex items-center justify-center transition-opacity duration-300 ${currentStage === 'blackhole' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+                  <div className="blackhole-advanced">
+                    <div className="event-horizon"></div>
+                    <div className="accretion-disk"></div>
+                    <div className="star-field"></div>
+                  </div>
+                </div>
+                
+                {/* Result */}
+                <div className={`space-y-6 transition-opacity duration-500 ${currentStage === 'result' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+                  <div className="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
+                    <h3 className="text-2xl font-bold mb-3">Future Prediction</h3>
+                    <div className="text-3xl font-bold mb-6">
+                      Tomorrow will be {getTomorrowDate()}
+                    </div>
+                    
+                    <div className="flex items-center justify-center space-x-3 mt-4">
+                      <ThumbsUp className="h-6 w-6" />
+                      <span className="font-bold text-xl">100% Accuracy</span>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-800 p-5 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <BarChart3 className="h-6 w-6 text-gray-400 mr-2" />
+                        <span className="text-lg text-gray-300">
+                          {(dataPoints + 42000000).toLocaleString()} data points considered
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <Sun className="h-6 w-6 text-yellow-300 mr-2" />
+                        <span className="text-lg text-gray-300">Confidence: 100%</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center pt-4">
+                    <button
+                      onClick={resetWidget}
+                      className="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white text-lg font-medium rounded-md shadow-md transition duration-200"
+                    >
+                      Try Another Prediction
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+          
+          {/* Footer */}
+          <div className="bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center">
+            <p>© 2025 Future.Me Disruptor. All rights reserved.</p>
+            <a href="#" className="text-cyan-300 hover:underline mt-1 inline-block">Media Inquiries</a>
           </div>
         </div>
-      </div>
-      
-      {/* Footer */}
-      <div className="bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center">
-        <p>© 2025 Future.Me Disruptor. All rights reserved.</p>
-        <a href="#" className="text-cyan-300 hover:underline mt-1 inline-block">Media Inquiries</a>
-      </div>
-      
-      {/* CSS for animations */}
-      <style jsx>{`
-        .min-h-64 {
-          min-height: 28rem;
-        }
-        
-        .origami-fold {
-          animation: fold 2s forwards;
-        }
-        
-        @keyframes fold {
-          0% { transform: scale(1) rotate(0deg); }
-          25% { transform: scale(0.8) rotate(15deg); }
-          50% { transform: scale(0.5) rotate(45deg); box-shadow: 0 0 20px rgba(103, 232, 249, 0.6); }
-          75% { transform: scale(0.2) rotate(90deg); }
-          100% { transform: scale(0) rotate(180deg); }
-        }
-        
-        .brain-pulse {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(0.95); }
-        }
-        
-        .thought-appear {
-          animation: fadeIn 0.5s forwards;
-          animation-delay: var(--delay, 0s);
-          opacity: 0;
-        }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .blackhole {
-          width: 1px;
-          height: 1px;
-          background-color: #67e8f9;
-          border-radius: 50%;
-          animation: blackhole 2s forwards;
-        }
-        
-        @keyframes blackhole {
-          0% { transform: scale(1); }
-          40% { transform: scale(40); box-shadow: 0 0 40px 20px rgba(103, 232, 249, 0.4); }
-          80% { transform: scale(100); box-shadow: 0 0 60px 30px rgba(103, 232, 249, 0.6); }
-          100% { transform: scale(1); }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-export default FutureMe;
+      );
+    };
+    
+    // Render the React component
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<FutureMe />);
+  </script>
+  
+  <style>
+    .min-h-64 {
+      min-height: 28rem;
+    }
+    
+    .origami-fold {
+      animation: fold 2s forwards;
+    }
+    
+    @keyframes fold {
+      0% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(0.8) rotate(15deg); }
+      50% { transform: scale(0.5) rotate(45deg); box-shadow: 0 0 20px rgba(103, 232, 249, 0.6); }
+      75% { transform: scale(0.2) rotate(90deg); }
+      100% { transform: scale(0) rotate(180deg); }
+    }
+    
+    .brain-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.95); }
+    }
+    
+    .thought-appear {
+      animation: fadeIn 0.5s forwards;
+      animation-delay: var(--delay, 0s);
+      opacity: 0;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Quantum animation */
+    .quantum-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+    
+    .quantum-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .ring-1 {
+      width: 100px;
+      height: 100px;
+      border-top-color: #67e8f9;
+      border-bottom-color: #67e8f9;
+      animation: quantum-spin1 4s linear infinite;
+    }
+    
+    .ring-2 {
+      width: 140px;
+      height: 140px;
+      border-left-color: #a855f7;
+      border-right-color: #a855f7;
+      animation: quantum-spin2 6s linear infinite;
+    }
+    
+    .ring-3 {
+      width: 180px;
+      height: 180px;
+      border-top-color: #3b82f6;
+      border-right-color: #3b82f6;
+      animation: quantum-spin3 8s linear infinite;
+    }
+    
+    .quantum-core {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, white, #67e8f9);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 20px 5px rgba(103, 232, 249, 0.8);
+      animation: pulse-core 2s ease-in-out infinite alternate;
+    }
+    
+    .quantum-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      animation: particles 4s linear infinite;
+    }
+    
+    .quantum-particles:before,
+    .quantum-particles:after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #67e8f9;
+      border-radius: 50%;
+      box-shadow: 0 0 15px 5px rgba(103, 232, 249, 0.6);
+    }
+    
+    .quantum-particles:before {
+      top: 20%;
+      left: 20%;
+      animation: particle1 4s ease-in-out infinite;
+    }
+    
+    .quantum-particles:after {
+      bottom: 20%;
+      right: 20%;
+      animation: particle2 4s ease-in-out infinite;
+    }
+    
+    @keyframes quantum-spin1 {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    @keyframes quantum-spin2 {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(-360deg); }
+    }
+    
+    @keyframes quantum-spin3 {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    @keyframes pulse-core {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.7; }
+      100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    }
+    
+    @keyframes particles {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes particle1 {
+      0%, 100% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.5) translate(20px, 20px); }
+    }
+    
+    @keyframes particle2 {
+      0%, 100% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.5) translate(-20px, -20px); }
+    }
+    
+    /* Advanced Blackhole Animation */
+    .blackhole-advanced {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+    
+    .event-horizon {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #000;
+      border-radius: 50%;
+      box-shadow: 0 0 60px 20px rgba(0, 0, 0, 0.8);
+      animation: event-horizon 3s ease-in-out infinite alternate;
+    }
+    
+    .accretion-disk {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(70deg);
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top: 4px solid #67e8f9;
+      border-bottom: 4px solid #3b82f6;
+      filter: blur(2px);
+      box-shadow: 0 0 30px rgba(103, 232, 249, 0.6);
+      animation: rotate-disk 3s linear infinite;
+    }
+    
+    .accretion-disk:before {
+      content: '';
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 8px solid transparent;
+      border-top: 8px solid #a855f7;
+      border-bottom: 8px solid #a855f7;
+      filter: blur(5px);
+      animation: rotate-disk-inner 2s linear infinite reverse;
+    }
+    
+    .star-field {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      animation: star-warp 3s ease-in-out infinite;
+    }
+    
+    .star-field:before,
+    .star-field:after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: white;
+      border-radius: 50%;
+      box-shadow: 
+        80px 50px 0 0 white,
+        -60px 90px 0 0 white,
+        120px -80px 0 0 white,
+        -90px -60px 0 0 white,
+        140px 30px 0 0 white,
+        -140px -20px 0 0 white,
+        100px 90px 0 1px white,
+        -110px 90px 0 0 white;
+    }
+    
+    .star-field:before {
+      top: 20%;
+      left: -50%;
+      animation: star-drift1 3s ease-in-out infinite alternate;
+    }
+    
+    .star-field:after {
+      bottom: 30%;
+      right: -40%;
+      animation: star-drift2 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes event-horizon {
+      0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 60px 20px rgba(0, 0, 0, 0.8); }
+      100% { transform: translate(-50%, -50%) scale(1.3); box-shadow: 0 0 80px 40px rgba(0, 0, 0, 0.9); }
+    }
+    
+    @keyframes rotate-disk {
+      0% { transform: translate(-50%, -50%) rotate(70deg); }
+      100% { transform: translate(-50%, -50%) rotate(430deg); }
+    }
+    
+    @keyframes rotate-disk-inner {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    @keyframes star-warp {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.8); opacity: 0.6; }
+    }
+    
+    @keyframes star-drift1 {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-30px, 20px); }
+    }
+    
+    @keyframes star-drift2 {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(30px, -20px); }
+    }
+  </style>
+</body>
+</html>
