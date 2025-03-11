@@ -9,6 +9,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #1a202c; /* Fully black background */
+      margin: 0;
+    }
+    
     .min-h-64 { min-height: 28rem; }
     
     .origami-fold { animation: fold 2s forwards; }
@@ -45,7 +53,7 @@
     
     @keyframes fadeOut {
       from { opacity: 1; }
-      to { opacity: 0; display: none; }
+      to { opacity: 0; }
     }
     
     /* Quantum animation */
@@ -85,17 +93,27 @@
     @keyframes star-drift1 { 0% { transform: translate(0, 0); } 100% { transform: translate(-30px, 20px); } }
     @keyframes star-drift2 { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, -20px); } }
     
-    .hidden { display: none; }
+    .content-container {
+      flex: 1 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .footer {
+      flex-shrink: 0;
+    }
   </style>
 </head>
-<body class="w-full min-h-screen flex flex-col">
+<body class="w-full min-h-screen flex flex-col bg-gray-900 text-white">
   <!-- Header -->
   <div id="header" class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
     <h1 class="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
   </div>
 
   <!-- Main Content -->
-  <div id="intro" class="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+  <div id="intro" class="content-container">
     <div class="w-full max-w-2xl mx-auto">
       <div class="text-center mb-16">
         <h2 class="text-5xl font-bold mb-6">
@@ -233,7 +251,7 @@
   </div>
 
   <!-- Footer -->
-  <div class="bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center">
+  <div class="footer bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center">
     <p>© 2025 Future.Me Disruptor. All rights reserved.</p>
     <a href="#" class="text-cyan-300 hover:underline mt-1 inline-block">Media Inquiries</a>
   </div>
