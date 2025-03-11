@@ -1,1 +1,301 @@
+import React, { useState } from 'react';
+import { ThumbsUp, Brain, BarChart3, Sun } from 'lucide-react';
 
+const FutureMe = () => {
+  const [formState, setFormState] = useState({
+    companyWebsite: '',
+    email: ''
+  });
+  
+  const [currentStage, setCurrentStage] = useState('form');
+  const [thoughts, setThoughts] = useState([]);
+  const [dataPoints, setDataPoints] = useState(0);
+  
+  // No timeZones needed since we removed the timezone selector
+  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState(prev => ({ ...prev, [name]: value }));
+  };
+  
+  const handlePredictClick = () => {
+    setCurrentStage('folding');
+    
+    setTimeout(() => {
+      setCurrentStage('thinking');
+      startThinkingSequence();
+    }, 2000);
+  };
+  
+  const startThinkingSequence = () => {
+    const thinkingPhrases = [
+      "Analyzing temporal anomalies...",
+      "Consulting with future experts...",
+      "Calculating probability matrices...",
+      "Scanning multiverse timelines...",
+      "Cross-referencing quantum variables..."
+    ];
+    
+    let thoughtIndex = 0;
+    const addThought = () => {
+      if (thoughtIndex < 5) {
+        const phrase = thinkingPhrases[thoughtIndex];
+        setThoughts(prev => [...prev, phrase]);
+        setDataPoints(prev => prev + Math.floor(Math.random() * 15000000) + 5000000);
+        thoughtIndex++;
+        setTimeout(addThought, 800);
+      } else {
+        setTimeout(() => {
+          setCurrentStage('blackhole');
+          
+          setTimeout(() => {
+            setCurrentStage('result');
+          }, 2000);
+        }, 1000);
+      }
+    };
+    
+    addThought();
+  };
+  
+  const getTomorrowDate = () => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    
+    return tomorrow.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      month: 'long', 
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+  
+  const resetWidget = () => {
+    setCurrentStage('form');
+    setThoughts([]);
+    setDataPoints(0);
+  };
+  
+  return (
+    <div className="w-full min-h-screen flex flex-col">
+      {/* Gradient header */}
+      <div className="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
+        <h1 className="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
+      </div>
+      
+      {/* Main content */}
+      <div className="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+        <div className="w-full max-w-2xl mx-auto">
+          {/* Title section */}
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold mb-6">
+              Generate future <span className="text-cyan-300">predictions</span> for <span className="text-cyan-300">free.</span>
+            </h2>
+            
+            <p className="text-xl text-gray-300 mb-2">Did you take one psychology class in college?</p>
+            <p className="text-xl text-gray-300 mb-8">Have you used ChatGPT a few times?</p>
+            
+            <p className="text-2xl mb-12">
+              <span className="font-bold">Guess what?</span> You're ready to predict a <span className="text-cyan-300">$20B</span> future.
+            </p>
+          </div>
+          
+          {/* Main widget area with fixed height to prevent layout shifts */}
+          <div className="min-h-64 relative rounded-xl overflow-hidden">
+            
+            {/* Form Stage */}
+            <div className={`transition-all duration-500 ${currentStage !== 'form' ? 'opacity-0 absolute inset-0 -z-10' : 'opacity-100 z-10'}`}>
+              <div className="space-y-8">
+                <div>
+                  <label className="block text-xl text-gray-300 mb-3">Company Website</label>
+                  <input
+                    type="url"
+                    name="companyWebsite"
+                    value={formState.companyWebsite || ''}
+                    onChange={handleInputChange}
+                    placeholder="https://www.yourcompany.com"
+                    className="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-xl text-gray-300 mb-3">Your Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formState.email || ''}
+                    onChange={handleInputChange}
+                    placeholder="you@example.com"
+                    className="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                    required
+                  />
+                </div>
+                
+                <div className="pt-6 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={handlePredictClick}
+                    className="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative"
+                  >
+                    Make me a prediction right now
+                    <span className="absolute -bottom-2 -right-2 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center pointer-events-none">
+                      <span className="transform translate-y-px">👆</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Folding Animation */}
+            <div className={`h-64 flex items-center justify-center transition-opacity duration-300 ${currentStage === 'folding' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+              <div className="relative">
+                <div className="w-32 h-32 bg-cyan-300 rounded-md origami-fold"></div>
+              </div>
+            </div>
+            
+            {/* Thinking Animation */}
+            <div className={`space-y-6 transition-opacity duration-300 ${currentStage === 'thinking' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+              <div className="flex items-center justify-center mb-4">
+                <div className="brain-pulse">
+                  <Brain className="h-16 w-16 text-cyan-300" />
+                </div>
+              </div>
+              
+              <div className="space-y-3">
+                {thoughts.map((thought, index) => (
+                  <div 
+                    key={index} 
+                    className="bg-gray-800 p-4 rounded-lg thought-appear"
+                    style={{ '--delay': `${index * 0.2}s` }}
+                  >
+                    <p className="text-gray-300">{thought}</p>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 text-center">
+                <p className="text-lg text-gray-300">
+                  <span className="font-medium text-cyan-300">{dataPoints.toLocaleString()}</span> data points processed
+                </p>
+                <div className="w-full bg-gray-800 rounded-full h-3 mt-3">
+                  <div 
+                    className="bg-cyan-300 h-3 rounded-full"
+                    style={{ width: `${Math.min((thoughts.length / 5) * 100, 100)}%`, transition: 'width 0.8s ease-in-out' }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Blackhole Animation */}
+            <div className={`h-64 flex items-center justify-center transition-opacity duration-300 ${currentStage === 'blackhole' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+              <div className="blackhole"></div>
+            </div>
+            
+            {/* Result */}
+            <div className={`space-y-6 transition-opacity duration-500 ${currentStage === 'result' ? 'opacity-100 z-10' : 'opacity-0 absolute inset-0 -z-10'}`}>
+              <div className="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
+                <h3 className="text-2xl font-bold mb-3">Future Prediction</h3>
+                <div className="text-3xl font-bold mb-6">
+                  Tomorrow will be {getTomorrowDate()}
+                </div>
+                
+                <div className="flex items-center justify-center space-x-3 mt-4">
+                  <ThumbsUp className="h-6 w-6" />
+                  <span className="font-bold text-xl">100% Accuracy</span>
+                </div>
+              </div>
+              
+              <div className="bg-gray-800 p-5 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <BarChart3 className="h-6 w-6 text-gray-400 mr-2" />
+                    <span className="text-lg text-gray-300">
+                      {(dataPoints + 42000000).toLocaleString()} data points considered
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <Sun className="h-6 w-6 text-yellow-300 mr-2" />
+                    <span className="text-lg text-gray-300">Confidence: 100%</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex justify-center pt-4">
+                <button
+                  onClick={resetWidget}
+                  className="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white text-lg font-medium rounded-md shadow-md transition duration-200"
+                >
+                  Try Another Prediction
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Footer */}
+      <div className="bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center">
+        <p>© 2025 Future.Me Disruptor. All rights reserved.</p>
+        <a href="#" className="text-cyan-300 hover:underline mt-1 inline-block">Media Inquiries</a>
+      </div>
+      
+      {/* CSS for animations */}
+      <style jsx>{`
+        .min-h-64 {
+          min-height: 28rem;
+        }
+        
+        .origami-fold {
+          animation: fold 2s forwards;
+        }
+        
+        @keyframes fold {
+          0% { transform: scale(1) rotate(0deg); }
+          25% { transform: scale(0.8) rotate(15deg); }
+          50% { transform: scale(0.5) rotate(45deg); box-shadow: 0 0 20px rgba(103, 232, 249, 0.6); }
+          75% { transform: scale(0.2) rotate(90deg); }
+          100% { transform: scale(0) rotate(180deg); }
+        }
+        
+        .brain-pulse {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(0.95); }
+        }
+        
+        .thought-appear {
+          animation: fadeIn 0.5s forwards;
+          animation-delay: var(--delay, 0s);
+          opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .blackhole {
+          width: 1px;
+          height: 1px;
+          background-color: #67e8f9;
+          border-radius: 50%;
+          animation: blackhole 2s forwards;
+        }
+        
+        @keyframes blackhole {
+          0% { transform: scale(1); }
+          40% { transform: scale(40); box-shadow: 0 0 40px 20px rgba(103, 232, 249, 0.4); }
+          80% { transform: scale(100); box-shadow: 0 0 60px 30px rgba(103, 232, 249, 0.6); }
+          100% { transform: scale(1); }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default FutureMe;
