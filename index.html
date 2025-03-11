@@ -39,6 +39,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
+    .fade-out {
+      animation: fadeOut 1s forwards;
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; display: none; }
+    }
+    
     /* Quantum animation */
     .quantum-container { position: relative; width: 200px; height: 200px; }
     .quantum-ring { position: absolute; border-radius: 50%; border: 2px solid transparent; top: 50%; left: 50%; transform: translate(-50%, -50%); }
@@ -81,12 +90,12 @@
 </head>
 <body class="w-full min-h-screen flex flex-col">
   <!-- Header -->
-  <div class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
+  <div id="header" class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
     <h1 class="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
   </div>
 
   <!-- Main Content -->
-  <div class="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+  <div id="intro" class="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
     <div class="w-full max-w-2xl mx-auto">
       <div class="text-center mb-16">
         <h2 class="text-5xl font-bold mb-6">
@@ -239,6 +248,8 @@
       result: document.getElementById('result-stage')
     };
 
+    const header = document.getElementById('header');
+    const intro = document.getElementById('intro');
     const predictBtn = document.getElementById('predict-btn');
     const resetBtn = document.getElementById('reset-btn');
     const thoughtsContainer = document.getElementById('thoughts-container');
@@ -319,17 +330,27 @@
     }
 
     predictBtn.addEventListener('click', () => {
-      showStage(stages.folding);
+      header.classList.add('fade-out');
+      intro.classList.add('fade-out');
       setTimeout(() => {
-        showStage(stages.thinking);
-        startThinkingSequence();
-      }, 2000);
+        header.style.display = 'none';
+        intro.style.display = 'none';
+        showStage(stages.folding);
+        setTimeout(() => {
+          showStage(stages.thinking);
+          startThinkingSequence();
+        }, 2000);
+      }, 1000); // Match the fade-out animation duration
     });
 
     resetBtn.addEventListener('click', () => {
       showStage(stages.form);
       document.getElementById('companyWebsite').value = '';
       document.getElementById('email').value = '';
+      header.classList.remove('fade-out');
+      intro.classList.remove('fade-out');
+      header.style.display = 'block';
+      intro.style.display = 'block';
     });
   </script>
 </body>
