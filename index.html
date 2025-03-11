@@ -9,30 +9,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background-color: #1a202c; /* Fully black background */
-      margin: 0;
-      overflow-x: hidden;
-    }
-    
-    .content-wrapper {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    
-    .main-content {
-      flex: 1 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    
     .min-h-64 { min-height: 28rem; }
     
     .origami-fold { animation: fold 2s forwards; }
@@ -61,15 +37,6 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .fade-out {
-      animation: fadeOut 1s forwards;
-    }
-    
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; height: 0; padding: 0; margin: 0; }
     }
     
     /* Quantum animation */
@@ -108,158 +75,158 @@
     @keyframes star-warp { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.8); opacity: 0.6; } }
     @keyframes star-drift1 { 0% { transform: translate(0, 0); } 100% { transform: translate(-30px, 20px); } }
     @keyframes star-drift2 { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, -20px); } }
+    
+    .hidden { display: none; }
   </style>
 </head>
-<body>
-  <div class="content-wrapper">
-    <!-- Header -->
-    <div id="header" class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
-      <h1 class="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
-    </div>
+<body class="w-full min-h-screen flex flex-col">
+  <!-- Header -->
+  <div class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
+    <h1 class="text-3xl font-bold">Predictions aren't hard, they're just impossible.</h1>
+  </div>
 
-    <!-- Main Content -->
-    <div id="main-content" class="main-content">
-      <div id="intro" class="w-full max-w-2xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-5xl font-bold mb-6">
-            Generate future <span class="text-cyan-300">predictions</span> for <span class="text-cyan-300">free.</span>
-          </h2>
-          <p class="text-xl text-gray-300 mb-2">Did you take one psychology class in college?</p>
-          <p class="text-xl text-gray-300 mb-8">Have you used ChatGPT a few times?</p>
-          <p class="text-2xl mb-12">
-            <span class="font-bold">Guess what?</span> You're ready to predict a <span class="text-cyan-300">$20B</span> future.
-          </p>
-        </div>
+  <!-- Main Content -->
+  <div class="flex-grow bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+    <div class="w-full max-w-2xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl font-bold mb-6">
+          Generate future <span class="text-cyan-300">predictions</span> for <span class="text-cyan-300">free.</span>
+        </h2>
+        <p class="text-xl text-gray-300 mb-2">Did you take one psychology class in college?</p>
+        <p class="text-xl text-gray-300 mb-8">Have you used ChatGPT a few times?</p>
+        <p class="text-2xl mb-12">
+          <span class="font-bold">Guess what?</span> You're ready to predict a <span class="text-cyan-300">$20B</span> future.
+        </p>
+      </div>
 
-        <!-- Widget Area -->
-        <div class="min-h-64 relative rounded-xl overflow-hidden">
-          <!-- Form Stage -->
-          <div id="form-stage" class="transition-all duration-500 z-10">
-            <div class="space-y-8">
-              <div>
-                <label class="block text-xl text-gray-300 mb-3">Company Website</label>
-                <input
-                  type="url"
-                  id="companyWebsite"
-                  placeholder="https://www.yourcompany.com"
-                  class="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
-                  required
-                />
-              </div>
-              <div>
-                <label class="block text-xl text-gray-300 mb-3">Your Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="you@example.com"
-                  class="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
-                  required
-                />
-              </div>
-              <div class="pt-6 flex justify-center">
-                <button
-                  id="predict-btn"
-                  class="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative"
-                >
-                  Make me a prediction right now
-                  <span class="absolute -bottom-2 -right-2 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center pointer-events-none">
-                    <span class="transform translate-y-px">👆</span>
-                  </span>
-                </button>
-              </div>
+      <!-- Widget Area -->
+      <div class="min-h-64 relative rounded-xl overflow-hidden">
+        <!-- Form Stage -->
+        <div id="form-stage" class="transition-all duration-500 z-10">
+          <div class="space-y-8">
+            <div>
+              <label class="block text-xl text-gray-300 mb-3">Company Website</label>
+              <input
+                type="url"
+                id="companyWebsite"
+                placeholder="https://www.yourcompany.com"
+                class="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                required
+              />
             </div>
-          </div>
-
-          <!-- Folding Stage -->
-          <div id="folding-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-            <div class="relative">
-              <div class="w-32 h-32 bg-cyan-300 rounded-md origami-fold"></div>
+            <div>
+              <label class="block text-xl text-gray-300 mb-3">Your Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                class="w-full px-5 py-4 bg-gray-800 border border-gray-700 rounded-md text-white text-lg focus:ring-cyan-300 focus:border-cyan-300"
+                required
+              />
             </div>
-          </div>
-
-          <!-- Thinking Stage -->
-          <div id="thinking-stage" class="space-y-6 transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-            <div class="flex items-center justify-center mb-4">
-              <div class="brain-pulse">
-                <svg class="h-16 w-16 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4h6M9 8h6m-6 4h6m-6 4h6m-6 8h6m-9-4v-8m6 8v-8m-9 4h12"/>
-                </svg>
-              </div>
-            </div>
-            <div id="thoughts-container" class="space-y-3"></div>
-            <div class="mt-6 text-center">
-              <p class="text-lg text-gray-300">
-                <span id="data-points" class="font-medium text-cyan-300">0</span> data points processed
-              </p>
-              <div class="w-full bg-gray-800 rounded-full h-3 mt-3">
-                <div id="progress-bar" class="bg-cyan-300 h-3 rounded-full" style="width: 0%; transition: width 0.8s ease-in-out"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Quantum Stage -->
-          <div id="quantum-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-            <div class="quantum-container">
-              <div class="quantum-ring ring-1"></div>
-              <div class="quantum-ring ring-2"></div>
-              <div class="quantum-ring ring-3"></div>
-              <div class="quantum-particles"></div>
-              <div class="quantum-core"></div>
-            </div>
-          </div>
-
-          <!-- Blackhole Stage -->
-          <div id="blackhole-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
-            <div class="blackhole-advanced">
-              <div class="event-horizon"></div>
-              <div class="accretion-disk"></div>
-              <div class="star-field"></div>
-            </div>
-          </div>
-
-          <!-- Result Stage -->
-          <div id="result-stage" class="space-y-6 transition-opacity duration-500 absolute inset-0 -z-10 opacity-0">
-            <div class="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
-              <h3 class="text-2xl font-bold mb-3">Future Prediction</h3>
-              <div id="prediction-date" class="text-3xl font-bold mb-6"></div>
-              <div class="flex items-center justify-center space-x-3 mt-4">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-6 6m0 0l-6-6m6 6V3"/>
-                </svg>
-                <span class="font-bold text-xl">100% Accuracy</span>
-              </div>
-            </div>
-            <div class="bg-gray-800 p-5 rounded-lg">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <svg class="h-6 w-6 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                  </svg>
-                  <span id="final-data-points" class="text-lg text-gray-300"></span>
-                </div>
-                <div class="flex items-center">
-                  <svg class="h-6 w-6 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-                  </svg>
-                  <span class="text-lg text-gray-300">Confidence: 100%</span>
-                </div>
-              </div>
-            </div>
-            <div class="flex justify-center pt-4">
-              <button id="reset-btn" class="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white text-lg font-medium rounded-md shadow-md transition duration-200">
-                Try Another Prediction
+            <div class="pt-6 flex justify-center">
+              <button
+                id="predict-btn"
+                class="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative"
+              >
+                Make me a prediction right now
+                <span class="absolute -bottom-2 -right-2 w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center pointer-events-none">
+                  <span class="transform translate-y-px">👆</span>
+                </span>
               </button>
             </div>
           </div>
         </div>
+
+        <!-- Folding Stage -->
+        <div id="folding-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
+          <div class="relative">
+            <div class="w-32 h-32 bg-cyan-300 rounded-md origami-fold"></div>
+          </div>
+        </div>
+
+        <!-- Thinking Stage -->
+        <div id="thinking-stage" class="space-y-6 transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
+          <div class="flex items-center justify-center mb-4">
+            <div class="brain-pulse">
+              <svg class="h-16 w-16 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4h6M9 8h6m-6 4h6m-6 4h6m-6 8h6m-9-4v-8m6 8v-8m-9 4h12"/>
+              </svg>
+            </div>
+          </div>
+          <div id="thoughts-container" class="space-y-3"></div>
+          <div class="mt-6 text-center">
+            <p class="text-lg text-gray-300">
+              <span id="data-points" class="font-medium text-cyan-300">0</span> data points processed
+            </p>
+            <div class="w-full bg-gray-800 rounded-full h-3 mt-3">
+              <div id="progress-bar" class="bg-cyan-300 h-3 rounded-full" style="width: 0%; transition: width 0.8s ease-in-out"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantum Stage -->
+        <div id="quantum-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
+          <div class="quantum-container">
+            <div class="quantum-ring ring-1"></div>
+            <div class="quantum-ring ring-2"></div>
+            <div class="quantum-ring ring-3"></div>
+            <div class="quantum-particles"></div>
+            <div class="quantum-core"></div>
+          </div>
+        </div>
+
+        <!-- Blackhole Stage -->
+        <div id="blackhole-stage" class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0">
+          <div class="blackhole-advanced">
+            <div class="event-horizon"></div>
+            <div class="accretion-disk"></div>
+            <div class="star-field"></div>
+          </div>
+        </div>
+
+        <!-- Result Stage -->
+        <div id="result-stage" class="space-y-6 transition-opacity duration-500 absolute inset-0 -z-10 opacity-0">
+          <div class="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
+            <h3 class="text-2xl font-bold mb-3">Future Prediction</h3>
+            <div id="prediction-date" class="text-3xl font-bold mb-6"></div>
+            <div class="flex items-center justify-center space-x-3 mt-4">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-6 6m0 0l-6-6m6 6V3"/>
+              </svg>
+              <span class="font-bold text-xl">100% Accuracy</span>
+            </div>
+          </div>
+          <div class="bg-gray-800 p-5 rounded-lg">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <svg class="h-6 w-6 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                <span id="final-data-points" class="text-lg text-gray-300"></span>
+              </div>
+              <div class="flex items-center">
+                <svg class="h-6 w-6 text-yellow-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+                <span class="text-lg text-gray-300">Confidence: 100%</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center pt-4">
+            <button id="reset-btn" class="px-8 py-3 bg-gray-700 hover:bg-gray-600 text-white text-lg font-medium rounded-md shadow-md transition duration-200">
+              Try Another Prediction
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <div class="footer bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center">
-      <p>© 2025 Future.Me Disruptor. All rights reserved.</p>
-      <a href="#" class="text-cyan-300 hover:underline mt-1 inline-block">Media Inquiries</a>
-    </div>
+  <!-- Footer -->
+  <div class="bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center">
+    <p>© 2025 Future.Me Disruptor. All rights reserved.</p>
+    <a href="#" class="text-cyan-300 hover:underline mt-1 inline-block">Media Inquiries</a>
   </div>
 
   <script>
@@ -272,9 +239,6 @@
       result: document.getElementById('result-stage')
     };
 
-    const header = document.getElementById('header');
-    const intro = document.getElementById('intro');
-    const mainContent = document.getElementById('main-content');
     const predictBtn = document.getElementById('predict-btn');
     const resetBtn = document.getElementById('reset-btn');
     const thoughtsContainer = document.getElementById('thoughts-container');
@@ -355,29 +319,17 @@
     }
 
     predictBtn.addEventListener('click', () => {
-      header.classList.add('fade-out');
-      intro.classList.add('fade-out');
+      showStage(stages.folding);
       setTimeout(() => {
-        header.style.display = 'none';
-        intro.style.display = 'none';
-        mainContent.classList.add('flex', 'items-center', 'justify-center');
-        showStage(stages.folding);
-        setTimeout(() => {
-          showStage(stages.thinking);
-          startThinkingSequence();
-        }, 2000);
-      }, 1000); // Match the fade-out animation duration
+        showStage(stages.thinking);
+        startThinkingSequence();
+      }, 2000);
     });
 
     resetBtn.addEventListener('click', () => {
       showStage(stages.form);
       document.getElementById('companyWebsite').value = '';
       document.getElementById('email').value = '';
-      header.classList.remove('fade-out');
-      intro.classList.remove('fade-out');
-      header.style.display = 'block';
-      intro.style.display = 'block';
-      mainContent.classList.remove('flex', 'items-center', 'justify-center');
     });
   </script>
 </body>
