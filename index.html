@@ -45,7 +45,15 @@
     .ring-3 { width: 180px; height: 180px; border-top-color: #3b82f6; border-right-color: #3b82f6; animation: quantum-spin3 8s linear infinite; }
     .quantum-core { position: absolute; width: 40px; height: 40px; background: radial-gradient(circle, white, #67e8f9); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 20px 5px rgba(103, 232, 249, 0.8); animation: pulse-core 2s ease-in-out infinite alternate; }
     .quantum-particles { position: absolute; width: 100%; height: 100%; top: 0; left: 0; animation: particles 4s linear infinite; }
-    .quantum-particles:before, .quantum-particles:after { content: ''; position: absolute; width: 10px; height: 10px; background-color: #67e8f9; border-radius: 50%; box-shadow: 0 0 15px 5px rgba(103, 232, 249, 0.6); }
+    .quantum-particles:before, .quantum-particles:after { 
+      content: ''; 
+      position: absolute; 
+      width: 10px; 
+      height: 10px; 
+      background-color: #67e8f9; 
+      border-radius: 50%; 
+      box-shadow: 0 0 15px 5px rgba(103, 232, 249, 0.6); 
+    }
     .quantum-particles:before { top: 20%; left: 20%; animation: particle1 4s ease-in-out infinite; }
     .quantum-particles:after { bottom: 20%; right: 20%; animation: particle2 4s ease-in-out infinite; }
     
@@ -130,11 +138,6 @@
     
     .hidden { display: none; }
 
-    /* For the fade-out effect on the top section */
-    #top-section {
-      transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
-    }
-
     /* Constrain widget area height */
     .widget-container {
       max-height: 50vh; /* Limits the container to 50% of viewport height */
@@ -144,27 +147,20 @@
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
 
-  <!-- Gradient Header -->
-  <div class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-6 text-white text-center">
+  <!-- Gradient Header (unchanged) -->
+  <div class="w-full bg-gradient-to-r from-blue-400 to-cyan-300 p-4 text-white text-center">
     <h1 class="text-3xl font-bold">The ultimate AI forecasting tool.</h1>
   </div>
 
-  <!-- Top Section (Fade-Out Intro) -->
-  <div id="top-section" class="p-8">
-    <div class="w-full max-w-2xl mx-auto text-center mb-8">
-      <h2 class="text-5xl font-bold mb-6">
-        Predict the <span class="text-cyan-300">future</span> with <span class="text-cyan-300">confidence.</span>
-      </h2>
-      <p class="text-xl text-gray-300 mb-8">Forecast a future outcome with 100% certainty.</p>
-    </div>
-  </div>
-
-  <!-- Main Widget Area (Form & Animations) with reduced vertical padding -->
+  <!-- Main Widget Area (Form & Animations) -->
   <div class="flex-grow py-4 px-8 flex flex-col items-center justify-center">
     <div class="w-full max-w-2xl mx-auto">
       <div class="relative rounded-xl my-4 widget-container">
+
         <!-- Form Stage -->
         <div id="form-stage" class="transition-all duration-500 z-10">
+          <!-- New title added here -->
+          <h2 class="text-2xl font-bold mb-4 text-center">Predict the future with confidence.<br>Input data to get a forecast.</h2>
           <div class="space-y-2">
             <div>
               <label class="block text-xl text-gray-300 mb-3">Company Website</label>
@@ -334,7 +330,6 @@
   </div>
 
   <script>
-    /* Keep your existing script logic */
     const stages = {
       form: document.getElementById('form-stage'),
       folding: document.getElementById('folding-stage'),
@@ -356,13 +351,11 @@
 
     function showStage(stage) {
       Object.values(stages).forEach(s => {
-        s.classList.add('opacity-0');
-        s.classList.add('-z-10');
+        s.classList.add('opacity-0', '-z-10');
+        s.classList.remove('opacity-100', 'z-10');
       });
-      stage.classList.remove('opacity-0');
-      stage.classList.remove('-z-10');
-      stage.classList.add('opacity-100');
-      stage.classList.add('z-10');
+      stage.classList.remove('opacity-0', '-z-10');
+      stage.classList.add('opacity-100', 'z-10');
     }
 
     function getTomorrowDate() {
@@ -400,7 +393,7 @@
 
           dataPoints += Math.floor(Math.random() * 15000000) + 5000000;
           dataPointsEl.textContent = dataPoints.toLocaleString();
-          progressBar.style.width = `${Math.min((thoughtIndex + 1) / 5 * 100, 100)}%`;
+          progressBar.style.width = `${Math.min((thoughtIndex + 1) / thinkingPhrases.length * 100, 100)}%`;
 
           thoughtIndex++;
           setTimeout(addThought, 800);
@@ -422,30 +415,18 @@
     }
 
     predictBtn.addEventListener('click', () => {
-      const topSection = document.getElementById('top-section');
-      // Fade out top section and collapse height
-      topSection.classList.add('opacity-0', 'h-0', 'overflow-hidden');
+      // Directly show folding stage (we removed the top section fade-out)
+      showStage(stages.folding);
       setTimeout(() => {
-        // Start the sequence
-        showStage(stages.folding);
-        setTimeout(() => {
-          showStage(stages.thinking);
-          startThinkingSequence();
-        }, 2000);
-      }, 500);
+        showStage(stages.thinking);
+        startThinkingSequence();
+      }, 2000);
     });
 
     resetBtn.addEventListener('click', () => {
       showStage(stages.form);
       document.getElementById('companyWebsite').value = '';
       document.getElementById('email').value = '';
-      // Show top section again
-      const topSection = document.getElementById('top-section');
-      topSection.classList.remove('opacity-0', 'h-0', 'overflow-hidden');
-      topSection.classList.add('opacity-100');
-      setTimeout(() => {
-        topSection.style.display = 'block';
-      }, 50);
     });
   </script>
 </body>
