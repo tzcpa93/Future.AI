@@ -9,8 +9,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Keep the existing custom classes */
-    .min-h-64 { min-height: 28rem; }
-    
     .origami-fold { animation: fold 2s forwards; }
     
     @keyframes fold {
@@ -134,7 +132,7 @@
 
     /* For the fade-out effect on the top section */
     #top-section {
-      transition: opacity 0.5s ease-in-out;
+      transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
     }
   </style>
 </head>
@@ -147,7 +145,7 @@
 
   <!-- Top Section (Fade-Out Intro) -->
   <div id="top-section" class="p-8">
-    <div class="w-full max-w-2xl mx-auto text-center mb-16">
+    <div class="w-full max-w-2xl mx-auto text-center mb-8">
       <h2 class="text-5xl font-bold mb-6">
         Predict the <span class="text-cyan-300">future</span> with <span class="text-cyan-300">confidence.</span>
       </h2>
@@ -156,10 +154,9 @@
   </div>
 
   <!-- Main Widget Area (Form & Animations) with reduced vertical padding -->
-  <div class="flex-grow py-4 px-8 flex flex-col items-center justify-center">
+  <div class="py-4 px-8 flex flex-col items-center justify-center">
     <div class="w-full max-w-2xl mx-auto">
-      <!-- Remove "overflow-hidden" so content doesn't get clipped -->
-      <div class="min-h-64 relative rounded-xl my-8">
+      <div class="relative rounded-xl my-4">
         <!-- Form Stage -->
         <div id="form-stage" class="transition-all duration-500 z-10">
           <div class="space-y-2">
@@ -200,7 +197,8 @@
         <!-- Folding Stage -->
         <div
           id="folding-stage"
-          class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
+          class="flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
+          style="height: 0;"
         >
           <div class="relative">
             <div class="w-32 h-32 bg-cyan-300 rounded-md origami-fold"></div>
@@ -211,6 +209,7 @@
         <div
           id="thinking-stage"
           class="space-y-6 transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
+          style="height: 0;"
         >
           <div class="flex items-center justify-center mb-4">
             <div class="brain-pulse">
@@ -242,7 +241,8 @@
         <!-- Quantum Stage -->
         <div
           id="quantum-stage"
-          class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
+          class="flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
+          style="height: 0;"
         >
           <div class="quantum-container">
             <div class="quantum-ring ring-1"></div>
@@ -256,7 +256,8 @@
         <!-- Blackhole Stage -->
         <div
           id="blackhole-stage"
-          class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
+          class="flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
+          style="height: 0;"
         >
           <div class="blackhole-advanced">
             <div class="event-horizon"></div>
@@ -269,6 +270,7 @@
         <div
           id="result-stage"
           class="space-y-6 transition-opacity duration-500 absolute inset-0 -z-10 opacity-0"
+          style="height: 0;"
         >
           <div class="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
             <h3 class="text-2xl font-bold mb-3">Future Prediction</h3>
@@ -355,13 +357,13 @@
       Object.values(stages).forEach(s => {
         s.classList.add('opacity-0');
         s.classList.add('-z-10');
-        s.classList.remove('opacity-100');
-        s.classList.remove('z-10');
+        s.style.height = '0'; // Collapse height for hidden stages
       });
       stage.classList.remove('opacity-0');
       stage.classList.remove('-z-10');
       stage.classList.add('opacity-100');
       stage.classList.add('z-10');
+      stage.style.height = 'auto'; // Allow active stage to size naturally
     }
 
     function getTomorrowDate() {
@@ -422,10 +424,9 @@
 
     predictBtn.addEventListener('click', () => {
       const topSection = document.getElementById('top-section');
-      // Fade out top section
-      topSection.classList.add('opacity-0');
+      // Fade out top section and collapse height
+      topSection.classList.add('opacity-0', 'h-0', 'overflow-hidden');
       setTimeout(() => {
-        topSection.style.display = 'none';
         // Start the sequence
         showStage(stages.folding);
         setTimeout(() => {
@@ -441,9 +442,10 @@
       document.getElementById('email').value = '';
       // Show top section again
       const topSection = document.getElementById('top-section');
-      topSection.style.display = 'block';
+      topSection.classList.remove('opacity-0', 'h-0', 'overflow-hidden');
+      topSection.classList.add('opacity-100');
       setTimeout(() => {
-        topSection.classList.remove('opacity-0');
+        topSection.style.display = 'block';
       }, 50);
     });
   </script>
