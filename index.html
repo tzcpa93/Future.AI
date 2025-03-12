@@ -134,6 +134,12 @@
     #top-section {
       transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
     }
+
+    /* Constrain widget area height */
+    .widget-container {
+      max-height: 50vh; /* Limits the container to 50% of viewport height */
+      overflow: hidden; /* Prevents content from spilling out */
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
@@ -154,9 +160,9 @@
   </div>
 
   <!-- Main Widget Area (Form & Animations) with reduced vertical padding -->
-  <div class="py-4 px-8 flex flex-col items-center justify-center">
+  <div class="flex-grow py-4 px-8 flex flex-col items-center justify-center">
     <div class="w-full max-w-2xl mx-auto">
-      <div class="relative rounded-xl my-4">
+      <div class="relative rounded-xl my-4 widget-container">
         <!-- Form Stage -->
         <div id="form-stage" class="transition-all duration-500 z-10">
           <div class="space-y-2">
@@ -197,8 +203,7 @@
         <!-- Folding Stage -->
         <div
           id="folding-stage"
-          class="flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
-          style="height: 0;"
+          class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
         >
           <div class="relative">
             <div class="w-32 h-32 bg-cyan-300 rounded-md origami-fold"></div>
@@ -208,8 +213,7 @@
         <!-- Thinking Stage -->
         <div
           id="thinking-stage"
-          class="space-y-6 transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
-          style="height: 0;"
+          class="h-64 space-y-6 transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
         >
           <div class="flex items-center justify-center mb-4">
             <div class="brain-pulse">
@@ -241,8 +245,7 @@
         <!-- Quantum Stage -->
         <div
           id="quantum-stage"
-          class="flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
-          style="height: 0;"
+          class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
         >
           <div class="quantum-container">
             <div class="quantum-ring ring-1"></div>
@@ -256,8 +259,7 @@
         <!-- Blackhole Stage -->
         <div
           id="blackhole-stage"
-          class="flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
-          style="height: 0;"
+          class="h-64 flex items-center justify-center transition-opacity duration-300 absolute inset-0 -z-10 opacity-0"
         >
           <div class="blackhole-advanced">
             <div class="event-horizon"></div>
@@ -269,8 +271,7 @@
         <!-- Result Stage -->
         <div
           id="result-stage"
-          class="space-y-6 transition-opacity duration-500 absolute inset-0 -z-10 opacity-0"
-          style="height: 0;"
+          class="h-64 space-y-6 transition-opacity duration-500 absolute inset-0 -z-10 opacity-0"
         >
           <div class="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
             <h3 class="text-2xl font-bold mb-3">Future Prediction</h3>
@@ -357,13 +358,11 @@
       Object.values(stages).forEach(s => {
         s.classList.add('opacity-0');
         s.classList.add('-z-10');
-        s.style.height = '0'; // Collapse height for hidden stages
       });
       stage.classList.remove('opacity-0');
       stage.classList.remove('-z-10');
       stage.classList.add('opacity-100');
       stage.classList.add('z-10');
-      stage.style.height = 'auto'; // Allow active stage to size naturally
     }
 
     function getTomorrowDate() {
