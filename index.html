@@ -182,13 +182,13 @@
                 required
               />
             </div>
-           <div class="pt-6 flex justify-center">
-          <button id="predict-btn" class="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative">
-            Forecast Now
-          </button>
+            <div class="pt-6 flex justify-center">
+              <button id="predict-btn" class="px-8 py-4 bg-cyan-300 hover:bg-cyan-400 text-gray-900 text-xl font-bold rounded-md shadow-lg transition duration-200 relative">
+                Forecast Now
+              </button>
+            </div>
+          </div>
         </div>
-        <div id="error-message" class="text-red-400 text-center mt-2 hidden"></div>
-        
 
         <!-- Folding Stage -->
         <div
@@ -409,24 +409,14 @@
       addThought();
     }
 
-   predictBtn.addEventListener('click', () => {
-  const companyWebsite = document.getElementById('companyWebsite').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const errorMessage = document.getElementById('error-message');
-
-  if (!companyWebsite || !email) {
-    errorMessage.textContent = 'Please fill in both Company Website and Email fields.';
-    errorMessage.classList.remove('hidden');
-    return;
-  }
-
-  errorMessage.classList.add('hidden');
-  showStage(stages.folding);
-  setTimeout(() => {
-    showStage(stages.thinking);
-    startThinkingSequence();
-  }, 2000);
-});
+    predictBtn.addEventListener('click', () => {
+      // Immediately show folding stage since we removed the top fade-out
+      showStage(stages.folding);
+      setTimeout(() => {
+        showStage(stages.thinking);
+        startThinkingSequence();
+      }, 2000);
+    });
 
     resetBtn.addEventListener('click', () => {
       showStage(stages.form);
