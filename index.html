@@ -160,10 +160,15 @@
         <!-- Form Stage -->
         <div id="form-stage" class="transition-all duration-500 z-10">
           <!-- New title added here -->
-          <h2 class="text-2xl font-bold mb-4 text-center">Forecast the future with confidence.<br>Input key data to get started:</h2>
+          <<h2 class="text-xl md:text-6xl font-bold mb-4 text-center">
+  Forecast the <span class="text-cyan-300">future</span> with 
+  <span class="text-cyan-300">confidence</span>.<br><br>Input core data for our algorithm:
+</h2>
           <div class="space-y-2">
             <div>
-              <label class="block text-xl text-gray-300 mb-3">Company Website</label>
+              <label class="block text-xl text-gray-300 mb-3">
+  Company Website <span class="text-red-500">*</span>
+</label>
               <input
                 type="url"
                 id="companyWebsite"
@@ -173,7 +178,9 @@
               />
             </div>
             <div>
-              <label class="block text-xl text-gray-300 mb-3">Your Email</label>
+             <label class="block text-xl text-gray-300 mb-3">
+  Your Email <span class="text-red-500">*</span>
+</label>
               <input
                 type="email"
                 id="email"
@@ -264,7 +271,7 @@
           class="h-64 space-y-6 transition-opacity duration-500 absolute inset-0 -z-10 opacity-0"
         >
           <div class="bg-gradient-to-r from-blue-400 to-cyan-300 p-8 rounded-lg text-white text-center">
-            <h3 class="text-2xl font-bold mb-3">Future Prediction</h3>
+            <h3 class="text-2xl font-bold mb-3">Future Prediction:</h3>
             <div id="prediction-date" class="text-3xl font-bold mb-6"></div>
             <div class="flex items-center justify-center space-x-3 mt-4">
               <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
